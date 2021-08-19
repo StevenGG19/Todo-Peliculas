@@ -14,7 +14,7 @@
             android:id="@+id/action_movieFragment_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment" />
     </fragment>
-    <fragment
+    <dialog
         android:id="@+id/movieDetailFragment"
         android:name="com.steven.todopeliculas.ui.moviedetails.MovieDetailFragment"
         android:label="fragment_movie_detail"
@@ -43,5 +43,5 @@
         <argument
             android:name="releaseDate"
             app:argType="string" />
-    </fragment>
+    </dialog>
 </navigation>
