@@ -3,6 +3,7 @@ package com.steven.todopeliculas.data.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.steven.todopeliculas.ui.moviedetails.MovieDetailFragmentArgs
 
 data class Movie(
     val id: Int = -1,
@@ -19,6 +20,40 @@ data class Movie(
     val vote_average: Double = -1.0,
     val vote_count: Int = -1,
     val movie_type: String = ""
+)
+
+@Entity
+data class FavoriteMovie(
+    @PrimaryKey
+    val id: Int = -1,
+    @ColumnInfo(name = "backdrop_path")
+    val backdrop_path: String = "",
+    @ColumnInfo(name = "original_language")
+    val original_language: String = "",
+    @ColumnInfo(name = "overview")
+    val overview: String = "",
+    @ColumnInfo(name = "poster_path")
+    val poster_path: String = "",
+    @ColumnInfo(name = "release_date")
+    val release_date: String = "",
+    @ColumnInfo(name = "title")
+    val title: String = "",
+    @ColumnInfo(name = "vote_average")
+    val vote_average: Double = -1.0,
+    @ColumnInfo(name = "vote_count")
+    val vote_count: Int = -1,
+)
+
+fun MovieDetailFragmentArgs.toFavoriteMovie() = FavoriteMovie(
+    this.id,
+    this.backgroundImageUrl,
+    this.language,
+    this.overview,
+    this.posterImageUrl,
+    this.releaseDate,
+    this.title,
+    this.voteAverage.toDouble(),
+    this.voteCount
 )
 
 data class MovieList(val results: List<Movie> = listOf())

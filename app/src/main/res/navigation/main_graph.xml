@@ -43,5 +43,8 @@
         <argument
             android:name="releaseDate"
             app:argType="string" />
+        <argument
+            android:name="id"
+            app:argType="integer" />
     </dialog>
 </navigation>

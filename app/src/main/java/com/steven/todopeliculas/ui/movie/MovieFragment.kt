@@ -105,7 +105,8 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickListener {
             movie.overview,
             movie.title,
             movie.original_language,
-            movie.release_date
+            movie.release_date,
+            movie.id
         )
         findNavController().navigate(action)
     }

@@ -2,21 +2,34 @@ package com.steven.todopeliculas.ui.moviedetails
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.steven.todopeliculas.R
 import com.steven.todopeliculas.application.AppConstants
+import com.steven.todopeliculas.data.local.AppDatabase
+import com.steven.todopeliculas.data.local.LocalMovieDataSource
+import com.steven.todopeliculas.data.model.toFavoriteMovie
 import com.steven.todopeliculas.databinding.FragmentMovieDetailBinding
+import com.steven.todopeliculas.presentation.FavoriteMovieViewModel
+import com.steven.todopeliculas.presentation.FavoriteMovieViewModelFactory
 
 class MovieDetailFragment : DialogFragment() {
+    private var isFavorite = false
     private var _binding: FragmentMovieDetailBinding? = null
     private val binding get() = _binding!!
     private val args by navArgs<MovieDetailFragmentArgs>()
+    private val viewModel by viewModels<FavoriteMovieViewModel> {
+        FavoriteMovieViewModelFactory(
+            LocalMovieDataSource(
+                AppDatabase.getDatabase(requireContext()).movieDao()
+            )
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +48,22 @@ class MovieDetailFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.toolbarMovieDetail.navigationIcon = ContextCompat.getDrawable(view.context, R.drawable.ic_arrow_back)
-        binding.toolbarMovieDetail.setNavigationOnClickListener{
+        binding.toolbarMovieDetail.navigationIcon =
+            ContextCompat.getDrawable(view.context, R.drawable.ic_arrow_back)
+        binding.toolbarMovieDetail.setNavigationOnClickListener {
             dismiss()
+        }
+
+        findFavoriteMovie()
+
+        binding.favorite.setOnClickListener {
+            if (isFavorite) {
+                viewModel.deleteFavoriteMovie(args.toFavoriteMovie())
+                binding.imgFavorite.setImageResource(R.drawable.ic_favorite_border)
+                isFavorite = false
+            } else {
+                viewModel.saveFavoriteMovie(args.toFavoriteMovie())
+            }
         }
 
         Glide.with(requireContext()).load(AppConstants.IMAGE_URL + args.posterImageUrl)
@@ -49,5 +75,17 @@ class MovieDetailFragment : DialogFragment() {
         binding.txtLanguage.text = "Language ${args.language}"
         binding.txtRating.text = "${args.voteAverage} (${args.voteCount} Reviews)"
         binding.txtReleased.text = "Released ${args.releaseDate}"
+    }
+
+    private fun findFavoriteMovie() {
+        viewModel.favoriteMovieList.observe(viewLifecycleOwner, { movieList ->
+            movieList.forEach {
+                if (it.id == args.id) {
+                    binding.imgFavorite.setImageResource(R.drawable.ic_baseline_favorite)
+                    isFavorite = true
+                    return@observe
+                }
+            }
+        })
     }
 }
