@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
+import com.steven.todopeliculas.application.OnMovieClickListener
 import com.steven.todopeliculas.core.Resource
 import com.steven.todopeliculas.data.local.AppDatabase
 import com.steven.todopeliculas.data.local.LocalMovieDataSource
@@ -24,7 +25,7 @@ import com.steven.todopeliculas.ui.movie.adapters.concat.PopularConcatAdapter
 import com.steven.todopeliculas.ui.movie.adapters.concat.TopRatedConcatAdapter
 import com.steven.todopeliculas.ui.movie.adapters.concat.UpcomingConcatAdapter
 
-class MovieFragment : Fragment(), MovieAdapter.OnMovieClickListener {
+class MovieFragment : Fragment(), OnMovieClickListener<Movie> {
     private var _binding: FragmentMovieBinding? = null
     private val binding get() = _binding!!
     private lateinit var concatAdapter: ConcatAdapter

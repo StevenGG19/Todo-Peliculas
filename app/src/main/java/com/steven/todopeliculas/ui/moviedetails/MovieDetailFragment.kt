@@ -72,9 +72,9 @@ class MovieDetailFragment : DialogFragment() {
             .centerCrop().into(binding.imgBackground)
         binding.txtMovieTitle.text = args.title
         binding.txtDescription.text = args.overview
-        binding.txtLanguage.text = "Language ${args.language}"
-        binding.txtRating.text = "${args.voteAverage} (${args.voteCount} Reviews)"
-        binding.txtReleased.text = "Released ${args.releaseDate}"
+        binding.txtLanguage.text = getString(R.string.language, args.language)
+        binding.txtRating.text = getString(R.string.reviews, args.voteAverage, args.voteCount)
+        binding.txtReleased.text = getString(R.string.released, args.releaseDate)
     }
 
     private fun findFavoriteMovie() {

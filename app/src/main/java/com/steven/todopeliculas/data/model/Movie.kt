@@ -39,7 +39,7 @@ data class FavoriteMovie(
     @ColumnInfo(name = "title")
     val title: String = "",
     @ColumnInfo(name = "vote_average")
-    val vote_average: Double = -1.0,
+    val vote_average: Float = 0.0f,
     @ColumnInfo(name = "vote_count")
     val vote_count: Int = -1,
 )
@@ -52,7 +52,7 @@ fun MovieDetailFragmentArgs.toFavoriteMovie() = FavoriteMovie(
     this.posterImageUrl,
     this.releaseDate,
     this.title,
-    this.voteAverage.toDouble(),
+    this.voteAverage,
     this.voteCount
 )
 

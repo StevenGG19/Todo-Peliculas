@@ -7,18 +7,15 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.steven.todopeliculas.application.AppConstants
+import com.steven.todopeliculas.application.OnMovieClickListener
 import com.steven.todopeliculas.core.BaseViewHolder
 import com.steven.todopeliculas.data.model.Movie
 import com.steven.todopeliculas.databinding.MovieItemBinding
 
 class MovieAdapter(
     private val movieList: List<Movie>,
-    private val itemClickListener: OnMovieClickListener
+    private val itemClickListener: OnMovieClickListener<Movie>
 ) : RecyclerView.Adapter<BaseViewHolder<*>>() {
-
-    interface OnMovieClickListener {
-        fun onMovieClick(movie: Movie)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
         val itemBinding =

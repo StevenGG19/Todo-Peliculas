@@ -13,7 +13,6 @@ class FavoriteMovieViewModel(private val repo: LocalMovieDataSource) : ViewModel
         favoriteMovieList = repo.getFavoriteMovies()
     }
 
-
     fun saveFavoriteMovie(movie: FavoriteMovie) {
         viewModelScope.launch(Dispatchers.IO) {
             repo.saveFavoriteMovie(movie)
