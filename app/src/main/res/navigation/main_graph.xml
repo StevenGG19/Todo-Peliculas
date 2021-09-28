@@ -55,4 +55,9 @@
         android:name="com.steven.todopeliculas.ui.favoritemovies.FavoriteMoviesFragment"
         android:label="fragment_favorite_movies"
         tools:layout="@layout/fragment_favorite_movies" />
+    <fragment
+        android:id="@+id/profieFragment"
+        android:name="com.steven.todopeliculas.ui.profile.ProfieFragment"
+        android:label="fragment_profie"
+        tools:layout="@layout/fragment_profie" />
 </navigation>

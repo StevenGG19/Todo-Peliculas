@@ -43,6 +43,9 @@ class FavoriteMoviesFragment : Fragment(), OnMovieClickListener<FavoriteMovie> {
 
     private fun observeViewModel() {
         viewModel.favoriteMovieList.observe(viewLifecycleOwner, { movie ->
+            if(movie.isEmpty()) {
+                binding.rlNoFavorites.visibility = View.VISIBLE
+            }
             concatAdapter.updateData(movie)
         })
     }
@@ -50,6 +53,4 @@ class FavoriteMoviesFragment : Fragment(), OnMovieClickListener<FavoriteMovie> {
     override fun onMovieClick(movie: FavoriteMovie) {
         viewModel.deleteFavoriteMovie(movie)
     }
-
-
 }

@@ -40,14 +40,14 @@ class MovieDetailFragment : DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        dialog?.window?.attributes?.windowAnimations = R.style.animation
         binding.toolbarMovieDetail.navigationIcon =
             ContextCompat.getDrawable(view.context, R.drawable.ic_arrow_back)
         binding.toolbarMovieDetail.setNavigationOnClickListener {
