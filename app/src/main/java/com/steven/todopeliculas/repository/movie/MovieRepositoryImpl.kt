@@ -1,6 +1,5 @@
-package com.steven.todopeliculas.repository
+package com.steven.todopeliculas.repository.movie
 
-import android.util.Log
 import com.steven.todopeliculas.core.InternetCheck
 import com.steven.todopeliculas.data.local.LocalMovieDataSource
 import com.steven.todopeliculas.data.model.MovieList

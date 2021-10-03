@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
 import com.steven.todopeliculas.core.Resource
-import com.steven.todopeliculas.repository.MovieRepository
+import com.steven.todopeliculas.repository.movie.MovieRepository
 import kotlinx.coroutines.Dispatchers
 
 class MovieViewModel(private val repo: MovieRepository): ViewModel() {

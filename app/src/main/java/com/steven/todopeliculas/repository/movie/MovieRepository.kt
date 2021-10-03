@@ -1,4 +1,4 @@
-package com.steven.todopeliculas.repository
+package com.steven.todopeliculas.repository.movie
 
 import com.steven.todopeliculas.data.model.MovieList
 

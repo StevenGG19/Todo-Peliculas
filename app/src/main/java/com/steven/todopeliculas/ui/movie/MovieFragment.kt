@@ -18,7 +18,7 @@ import com.steven.todopeliculas.data.remote.RemoteMovieDataSource
 import com.steven.todopeliculas.databinding.FragmentMovieBinding
 import com.steven.todopeliculas.presentation.MovieViewModel
 import com.steven.todopeliculas.presentation.MovieViewModelFactory
-import com.steven.todopeliculas.repository.MovieRepositoryImpl
+import com.steven.todopeliculas.repository.movie.MovieRepositoryImpl
 import com.steven.todopeliculas.repository.RetrofitClient
 import com.steven.todopeliculas.ui.movie.adapters.MovieAdapter
 import com.steven.todopeliculas.ui.movie.adapters.concat.PopularConcatAdapter
