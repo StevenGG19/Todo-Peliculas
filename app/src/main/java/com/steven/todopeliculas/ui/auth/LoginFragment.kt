@@ -18,7 +18,7 @@ import com.steven.todopeliculas.presentation.AuthViewModelFactory
 import com.steven.todopeliculas.repository.auth.AuthRepositoryImpl
 
 
-class LoginFragment : Fragment(R.layout.fragment_login) {
+class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
     private val firebaseAuth by lazy { FirebaseAuth.getInstance() }

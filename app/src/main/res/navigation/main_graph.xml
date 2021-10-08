@@ -57,9 +57,13 @@
         tools:layout="@layout/fragment_favorite_movies" />
     <fragment
         android:id="@+id/profieFragment"
-        android:name="com.steven.todopeliculas.ui.profile.ProfieFragment"
-        android:label="fragment_profie"
-        tools:layout="@layout/fragment_profie" />
+        android:name="com.steven.todopeliculas.ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profieFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.steven.todopeliculas.ui.auth.LoginFragment"

@@ -1,3 +1,3 @@
 package com.steven.todopeliculas.data.model
 
-data class User(val email: String, val fullName: String, val username: String, val photoUrl: String)
+data class User(var email: String = "", var fullName: String = "", var username: String = "", var photoUrl: String = "")

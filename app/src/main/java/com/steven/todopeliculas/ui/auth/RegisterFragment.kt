@@ -16,7 +16,7 @@ import com.steven.todopeliculas.presentation.AuthViewModel
 import com.steven.todopeliculas.presentation.AuthViewModelFactory
 import com.steven.todopeliculas.repository.auth.AuthRepositoryImpl
 
-class RegisterFragment : Fragment(R.layout.fragment_register) {
+class RegisterFragment : Fragment() {
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<AuthViewModel> {
@@ -31,7 +31,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
         return binding.root
     }
