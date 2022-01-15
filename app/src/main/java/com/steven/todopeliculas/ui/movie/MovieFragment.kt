@@ -44,7 +44,7 @@ class MovieFragment : Fragment(), OnMovieClickListener<Movie> {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMovieBinding.inflate(inflater, container, false)
         return binding.root
     }

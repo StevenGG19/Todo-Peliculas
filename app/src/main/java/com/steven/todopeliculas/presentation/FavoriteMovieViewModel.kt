@@ -7,11 +7,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class FavoriteMovieViewModel(private val repo: LocalMovieDataSource) : ViewModel() {
-    val favoriteMovieList: LiveData<List<FavoriteMovie>>
 
-    init {
-        favoriteMovieList = repo.getFavoriteMovies()
-    }
+    val favoriteMovieList: LiveData<List<FavoriteMovie>> = repo.getFavoriteMovies()
 
     fun saveFavoriteMovie(movie: FavoriteMovie) {
         viewModelScope.launch(Dispatchers.IO) {

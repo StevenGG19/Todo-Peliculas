@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -58,11 +59,9 @@ class MovieDetailFragment : DialogFragment() {
 
         binding.favorite.setOnClickListener {
             if (isFavorite) {
-                viewModel.deleteFavoriteMovie(args.toFavoriteMovie())
-                binding.imgFavorite.setImageResource(R.drawable.ic_favorite_border)
-                isFavorite = false
+                removeFromFavorite()
             } else {
-                viewModel.saveFavoriteMovie(args.toFavoriteMovie())
+                saveFavorite()
             }
         }
 
@@ -77,15 +76,32 @@ class MovieDetailFragment : DialogFragment() {
         binding.txtReleased.text = getString(R.string.released, args.releaseDate)
     }
 
+    private fun saveFavorite() {
+        viewModel.saveFavoriteMovie(args.toFavoriteMovie())
+        //changeIcon(binding.imgFavorite, R.drawable.ic_baseline_favorite)
+        //isFavorite = true
+    }
+
+    private fun removeFromFavorite() {
+        viewModel.deleteFavoriteMovie(args.toFavoriteMovie())
+        changeIcon(binding.imgFavorite, R.drawable.ic_favorite_border)
+        isFavorite = false
+    }
+
     private fun findFavoriteMovie() {
         viewModel.favoriteMovieList.observe(viewLifecycleOwner, { movieList ->
             movieList.forEach {
                 if (it.id == args.id) {
-                    binding.imgFavorite.setImageResource(R.drawable.ic_baseline_favorite)
+                    changeIcon(binding.imgFavorite, R.drawable.ic_baseline_favorite)
                     isFavorite = true
                     return@observe
                 }
             }
         })
     }
+
+    private fun changeIcon(image: ImageView, icBaselineFavorite: Int) {
+        image.setImageResource(icBaselineFavorite)
+    }
+
 }
