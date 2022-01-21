@@ -1,10 +1,12 @@
 package com.steven.todopeliculas.data.model
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.steven.todopeliculas.ui.moviedetails.MovieDetailFragmentArgs
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Movie(
     val id: Int = -1,
     val adult: Boolean = false,
@@ -20,7 +22,7 @@ data class Movie(
     val vote_average: Double = -1.0,
     val vote_count: Int = -1,
     val movie_type: String = ""
-)
+): Parcelable
 
 @Entity
 data class FavoriteMovie(
@@ -44,17 +46,18 @@ data class FavoriteMovie(
     val vote_count: Int = -1,
 )
 
-fun MovieDetailFragmentArgs.toFavoriteMovie() = FavoriteMovie(
-    this.id,
-    this.backgroundImageUrl,
-    this.language,
-    this.overview,
-    this.posterImageUrl,
-    this.releaseDate,
-    this.title,
-    this.voteAverage,
-    this.voteCount
-)
+fun Movie.toFavoriteMovie() = FavoriteMovie(
+        this.id,
+        this.backdrop_path ?: "",
+        this.original_language,
+        this.overview,
+        this.poster_path,
+        this.release_date,
+        this.title,
+        this.vote_average.toFloat(),
+        this.vote_count
+    )
+
 
 data class MovieList(val results: List<Movie> = listOf())
 

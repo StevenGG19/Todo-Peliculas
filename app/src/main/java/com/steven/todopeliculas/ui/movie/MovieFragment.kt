@@ -46,6 +46,7 @@ class MovieFragment : Fragment(), OnMovieClickListener<Movie> {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMovieBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
@@ -98,18 +99,9 @@ class MovieFragment : Fragment(), OnMovieClickListener<Movie> {
     }
 
     override fun onMovieClick(movie: Movie) {
-        val action = MovieFragmentDirections.actionMovieFragmentToMovieDetailFragment(
-            movie.poster_path,
-            movie.backdrop_path!!,
-            movie.vote_average.toFloat(),
-            movie.vote_count,
-            movie.overview,
-            movie.title,
-            movie.original_language,
-            movie.release_date,
-            movie.id
-        )
+        val action = MovieFragmentDirections.actionMovieFragmentToMovieDetailFragment(movie)
         findNavController().navigate(action)
     }
+
 
 }

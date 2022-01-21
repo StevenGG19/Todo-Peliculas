@@ -23,32 +23,8 @@
         android:label="fragment_movie_detail"
         tools:layout="@layout/fragment_movie_detail" >
         <argument
-            android:name="posterImageUrl"
-            app:argType="string" />
-        <argument
-            android:name="backgroundImageUrl"
-            app:argType="string" />
-        <argument
-            android:name="voteAverage"
-            app:argType="float" />
-        <argument
-            android:name="voteCount"
-            app:argType="integer" />
-        <argument
-            android:name="overview"
-            app:argType="string" />
-        <argument
-            android:name="title"
-            app:argType="string" />
-        <argument
-            android:name="language"
-            app:argType="string" />
-        <argument
-            android:name="releaseDate"
-            app:argType="string" />
-        <argument
-            android:name="id"
-            app:argType="integer" />
+            android:name="movie"
+            app:argType="com.steven.todopeliculas.data.model.Movie" />
     </dialog>
     <fragment
         android:id="@+id/favoriteMoviesFragment"
@@ -78,7 +54,9 @@
             app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_loginFragment_to_movieFragment"
-            app:destination="@id/movieFragment" />
+            app:destination="@id/movieFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"

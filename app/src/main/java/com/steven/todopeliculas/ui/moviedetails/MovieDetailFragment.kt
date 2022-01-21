@@ -65,25 +65,25 @@ class MovieDetailFragment : DialogFragment() {
             }
         }
 
-        Glide.with(requireContext()).load(AppConstants.IMAGE_URL + args.posterImageUrl)
+        Glide.with(requireContext()).load(AppConstants.IMAGE_URL + args.movie.poster_path)
             .centerCrop().into(binding.imgMovie)
-        Glide.with(requireContext()).load(AppConstants.IMAGE_URL + args.backgroundImageUrl)
+        Glide.with(requireContext()).load(AppConstants.IMAGE_URL + args.movie.backdrop_path)
             .centerCrop().into(binding.imgBackground)
-        binding.txtMovieTitle.text = args.title
-        binding.txtDescription.text = args.overview
-        binding.txtLanguage.text = getString(R.string.language, args.language)
-        binding.txtRating.text = getString(R.string.reviews, args.voteAverage, args.voteCount)
-        binding.txtReleased.text = getString(R.string.released, args.releaseDate)
+        binding.txtMovieTitle.text = args.movie.title
+        binding.txtDescription.text = args.movie.overview
+        binding.txtLanguage.text = getString(R.string.language, args.movie.original_language)
+        binding.txtRating.text = getString(R.string.reviews, args.movie.vote_average, args.movie.vote_count)
+        binding.txtReleased.text = getString(R.string.released, args.movie.release_date)
     }
 
     private fun saveFavorite() {
-        viewModel.saveFavoriteMovie(args.toFavoriteMovie())
+        viewModel.saveFavoriteMovie(args.movie.toFavoriteMovie())
         //changeIcon(binding.imgFavorite, R.drawable.ic_baseline_favorite)
         //isFavorite = true
     }
 
     private fun removeFromFavorite() {
-        viewModel.deleteFavoriteMovie(args.toFavoriteMovie())
+        viewModel.deleteFavoriteMovie(args.movie.toFavoriteMovie())
         changeIcon(binding.imgFavorite, R.drawable.ic_favorite_border)
         isFavorite = false
     }
@@ -91,7 +91,7 @@ class MovieDetailFragment : DialogFragment() {
     private fun findFavoriteMovie() {
         viewModel.favoriteMovieList.observe(viewLifecycleOwner, { movieList ->
             movieList.forEach {
-                if (it.id == args.id) {
+                if (it.id == args.movie.id) {
                     changeIcon(binding.imgFavorite, R.drawable.ic_baseline_favorite)
                     isFavorite = true
                     return@observe
