@@ -17,12 +17,11 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.steven.todopeliculas.R
 import com.steven.todopeliculas.core.Resource
-import com.steven.todopeliculas.data.remote.ProfileDataSource
 import com.steven.todopeliculas.databinding.FragmentProfileBinding
 import com.steven.todopeliculas.presentation.ProfileViewModel
-import com.steven.todopeliculas.presentation.ProfileViewModelFactory
-import com.steven.todopeliculas.repository.profile.ProfileRepoImpl
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
@@ -30,13 +29,7 @@ class ProfileFragment : Fragment() {
     private lateinit var userNickname: String
     private lateinit var userEmail: String
     private var bitmap: Bitmap? = null
-    private val viewmodel by viewModels<ProfileViewModel> {
-        ProfileViewModelFactory(
-            ProfileRepoImpl(
-                ProfileDataSource()
-            )
-        )
-    }
+    private val viewModel by viewModels<ProfileViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,7 +51,7 @@ class ProfileFragment : Fragment() {
 
     private fun signOut() {
         binding.btnExit.setOnClickListener {
-            viewmodel.signOut()
+            viewModel.signOut()
             findNavController().navigate(R.id.action_profieFragment_to_loginFragment)
         }
     }
@@ -89,7 +82,7 @@ class ProfileFragment : Fragment() {
             bitmap = null
         }
         if (userData.isNotEmpty()) {
-            viewmodel.updateUser(userData).observe(viewLifecycleOwner, { result ->
+            viewModel.updateUser(userData).observe(viewLifecycleOwner, { result ->
                 when(result) {
                     is Resource.Success -> {
                         Toast.makeText(requireContext(), "Se han actualizado los datos", Toast.LENGTH_SHORT).show()
@@ -123,7 +116,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun userData() {
-        viewmodel.getDataUser().observe(viewLifecycleOwner, { user ->
+        viewModel.getDataUser().observe(viewLifecycleOwner, { user ->
             when(user) {
                 is Resource.Loading -> {
                     binding.btnChangePhoto.isEnabled = false

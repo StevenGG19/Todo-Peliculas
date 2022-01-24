@@ -6,8 +6,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.steven.todopeliculas.application.AppConstants
 import com.steven.todopeliculas.data.model.User
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class AuthDataSource {
+class AuthDataSource @Inject constructor(){
     suspend fun singUp(email: String, password: String, fullName: String, username: String): FirebaseUser? {
         val authResult = FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).await()
         authResult.user?.uid?.let {

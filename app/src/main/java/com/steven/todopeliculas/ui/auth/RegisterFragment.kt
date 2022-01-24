@@ -10,22 +10,15 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.steven.todopeliculas.R
 import com.steven.todopeliculas.core.Resource
-import com.steven.todopeliculas.data.remote.AuthDataSource
 import com.steven.todopeliculas.databinding.FragmentRegisterBinding
 import com.steven.todopeliculas.presentation.AuthViewModel
-import com.steven.todopeliculas.presentation.AuthViewModelFactory
-import com.steven.todopeliculas.repository.auth.AuthRepositoryImpl
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RegisterFragment : Fragment() {
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
-    private val viewModel by viewModels<AuthViewModel> {
-        AuthViewModelFactory(
-            AuthRepositoryImpl(
-                AuthDataSource()
-            )
-        )
-    }
+    private val viewModel by viewModels<AuthViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

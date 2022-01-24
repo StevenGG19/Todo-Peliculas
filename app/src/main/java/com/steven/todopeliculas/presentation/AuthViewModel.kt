@@ -1,13 +1,15 @@
 package com.steven.todopeliculas.presentation
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
 import com.steven.todopeliculas.core.Resource
 import com.steven.todopeliculas.repository.auth.AuthRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 
-class AuthViewModel(private val repo: AuthRepository) : ViewModel() {
+@HiltViewModel
+class AuthViewModel @Inject constructor(private val repo: AuthRepository) : ViewModel() {
     fun singUp(email: String, password: String, name: String, username: String) =
         liveData(Dispatchers.IO) {
             emit(Resource.Loading())
@@ -25,11 +27,5 @@ class AuthViewModel(private val repo: AuthRepository) : ViewModel() {
         } catch (e: Exception) {
             emit(Resource.Failure(e))
         }
-    }
-}
-
-class AuthViewModelFactory(private val repo: AuthRepository) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return modelClass.getConstructor(AuthRepository::class.java).newInstance(repo)
     }
 }

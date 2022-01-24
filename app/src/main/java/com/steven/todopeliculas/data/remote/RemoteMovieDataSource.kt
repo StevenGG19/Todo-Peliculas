@@ -2,9 +2,9 @@ package com.steven.todopeliculas.data.remote
 
 import com.steven.todopeliculas.application.AppConstants
 import com.steven.todopeliculas.data.model.MovieList
-import com.steven.todopeliculas.repository.WebService
+import javax.inject.Inject
 
-class RemoteMovieDataSource(private val webService: WebService) {
+class RemoteMovieDataSource @Inject constructor(private val webService: WebService) {
     
     suspend fun getUpcomingMovies(): MovieList = webService.getUpcomingMovie(AppConstants.API_KEY)
 

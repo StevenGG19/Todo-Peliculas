@@ -11,34 +11,21 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import com.steven.todopeliculas.application.OnMovieClickListener
 import com.steven.todopeliculas.core.Resource
-import com.steven.todopeliculas.data.local.AppDatabase
-import com.steven.todopeliculas.data.local.LocalMovieDataSource
 import com.steven.todopeliculas.data.model.Movie
-import com.steven.todopeliculas.data.remote.RemoteMovieDataSource
 import com.steven.todopeliculas.databinding.FragmentMovieBinding
 import com.steven.todopeliculas.presentation.MovieViewModel
-import com.steven.todopeliculas.presentation.MovieViewModelFactory
-import com.steven.todopeliculas.repository.movie.MovieRepositoryImpl
-import com.steven.todopeliculas.repository.RetrofitClient
 import com.steven.todopeliculas.ui.movie.adapters.MovieAdapter
 import com.steven.todopeliculas.ui.movie.adapters.concat.PopularConcatAdapter
 import com.steven.todopeliculas.ui.movie.adapters.concat.TopRatedConcatAdapter
 import com.steven.todopeliculas.ui.movie.adapters.concat.UpcomingConcatAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MovieFragment : Fragment(), OnMovieClickListener<Movie> {
     private var _binding: FragmentMovieBinding? = null
     private val binding get() = _binding!!
     private lateinit var concatAdapter: ConcatAdapter
-
-    // Inyeccion de dependencias manual
-    private val viewModel by viewModels<MovieViewModel> {
-        MovieViewModelFactory(
-            MovieRepositoryImpl(
-                RemoteMovieDataSource(RetrofitClient.webService),
-                LocalMovieDataSource(AppDatabase.getDatabase(requireContext()).movieDao())
-            )
-        )
-    }
+    private val viewModel by viewModels<MovieViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -1,13 +1,15 @@
 package com.steven.todopeliculas.presentation
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
 import com.steven.todopeliculas.core.Resource
 import com.steven.todopeliculas.repository.profile.ProfileRepo
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 
-class ProfileViewModel(private val repo: ProfileRepo): ViewModel() {
+@HiltViewModel
+class ProfileViewModel @Inject constructor(private val repo: ProfileRepo): ViewModel() {
     fun getDataUser() = liveData(Dispatchers.IO) {
         emit(Resource.Loading())
         try {
@@ -27,9 +29,4 @@ class ProfileViewModel(private val repo: ProfileRepo): ViewModel() {
     }
 
     fun signOut() = repo.signOut()
-}
-class ProfileViewModelFactory(private val repo: ProfileRepo): ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return modelClass.getConstructor(ProfileRepo::class.java).newInstance(repo)
-    }
 }

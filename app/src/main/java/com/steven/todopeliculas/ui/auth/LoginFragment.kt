@@ -11,24 +11,16 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.steven.todopeliculas.R
 import com.steven.todopeliculas.core.Resource
-import com.steven.todopeliculas.data.remote.AuthDataSource
 import com.steven.todopeliculas.databinding.FragmentLoginBinding
 import com.steven.todopeliculas.presentation.AuthViewModel
-import com.steven.todopeliculas.presentation.AuthViewModelFactory
-import com.steven.todopeliculas.repository.auth.AuthRepositoryImpl
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
     private val firebaseAuth by lazy { FirebaseAuth.getInstance() }
-    private val viewmodel by viewModels<AuthViewModel> {
-        AuthViewModelFactory(
-            AuthRepositoryImpl(
-                AuthDataSource()
-            )
-        )
-    }
+    private val viewModel by viewModels<AuthViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,7 +60,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun singIn(email: String, password: String) {
-        viewmodel.singIn(email, password).observe(viewLifecycleOwner, { result ->
+        viewModel.singIn(email, password).observe(viewLifecycleOwner, { result ->
             when (result) {
                 is Resource.Loading -> binding.btnLogin.isEnabled = false
                 is Resource.Success -> findNavController().navigate(R.id.action_loginFragment_to_movieFragment)

@@ -2,17 +2,16 @@ package com.steven.todopeliculas.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Window
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.steven.todopeliculas.R
 import com.steven.todopeliculas.databinding.ActivityMainBinding
-import android.view.WindowManager
 import androidx.navigation.NavController
 import com.steven.todopeliculas.core.hide
 import com.steven.todopeliculas.core.show
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController

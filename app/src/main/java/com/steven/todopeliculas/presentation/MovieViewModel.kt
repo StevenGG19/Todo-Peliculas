@@ -1,31 +1,53 @@
 package com.steven.todopeliculas.presentation
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
 import com.steven.todopeliculas.core.Resource
+import com.steven.todopeliculas.data.model.FavoriteMovie
 import com.steven.todopeliculas.repository.movie.MovieRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MovieViewModel(private val repo: MovieRepository): ViewModel() {
+@HiltViewModel
+class MovieViewModel @Inject constructor(private val repo: MovieRepository) : ViewModel() {
 
     /*las supen fun necesitan un hilo donde ejecutarse en este caso utilizamos el
     Dispatchers.IO que sirve para ejecutar procesos que vienen del servidor
      */
-
     fun fetchMainScreenMovies() = liveData(Dispatchers.IO) {
         emit(Resource.Loading())
 
         try {
-            emit(Resource.Success(Triple(repo.getUpcomingMovie(), repo.getTopRatedMovie(), repo.getPopularMovie())))
+            emit(
+                Resource.Success(
+                    Triple(
+                        repo.getUpcomingMovie(),
+                        repo.getTopRatedMovie(),
+                        repo.getPopularMovie()
+                    )
+                )
+            )
         } catch (e: Exception) {
             emit(Resource.Failure(e))
         }
     }
-}
 
-class MovieViewModelFactory(private val repo: MovieRepository): ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return modelClass.getConstructor(MovieRepository::class.java).newInstance(repo)
+    // MovieDetailFragment and FavoriteMoviesFragment
+    val favoriteMovieList: LiveData<List<FavoriteMovie>> = repo.dataSourceLocal.getFavoriteMovies()
+
+    fun saveFavoriteMovie(movie: FavoriteMovie) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.dataSourceLocal.saveFavoriteMovie(movie)
+        }
+    }
+
+    fun deleteFavoriteMovie(movie: FavoriteMovie) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.dataSourceLocal.deleteFavoriteMovie(movie)
+        }
     }
 }

@@ -12,25 +12,18 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.steven.todopeliculas.R
 import com.steven.todopeliculas.application.AppConstants
-import com.steven.todopeliculas.data.local.AppDatabase
-import com.steven.todopeliculas.data.local.LocalMovieDataSource
 import com.steven.todopeliculas.data.model.toFavoriteMovie
 import com.steven.todopeliculas.databinding.FragmentMovieDetailBinding
-import com.steven.todopeliculas.presentation.FavoriteMovieViewModel
-import com.steven.todopeliculas.presentation.FavoriteMovieViewModelFactory
+import com.steven.todopeliculas.presentation.MovieViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MovieDetailFragment : DialogFragment() {
     private var isFavorite = false
     private var _binding: FragmentMovieDetailBinding? = null
     private val binding get() = _binding!!
     private val args by navArgs<MovieDetailFragmentArgs>()
-    private val viewModel by viewModels<FavoriteMovieViewModel> {
-        FavoriteMovieViewModelFactory(
-            LocalMovieDataSource(
-                AppDatabase.getDatabase(requireContext()).movieDao()
-            )
-        )
-    }
+    private val viewModel by viewModels<MovieViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,8 +71,6 @@ class MovieDetailFragment : DialogFragment() {
 
     private fun saveFavorite() {
         viewModel.saveFavoriteMovie(args.movie.toFavoriteMovie())
-        //changeIcon(binding.imgFavorite, R.drawable.ic_baseline_favorite)
-        //isFavorite = true
     }
 
     private fun removeFromFavorite() {

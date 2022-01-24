@@ -8,8 +8,9 @@ import com.steven.todopeliculas.data.model.User
 import kotlinx.coroutines.tasks.await
 import java.io.ByteArrayOutputStream
 import java.util.*
+import javax.inject.Inject
 
-class ProfileDataSource {
+class ProfileDataSource @Inject constructor(){
     suspend fun getUserData(): User? {
         val userId = FirebaseAuth.getInstance().currentUser
         var dataUser: User? = null
