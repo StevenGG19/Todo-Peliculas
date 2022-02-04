@@ -7,13 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.steven.todopeliculas.application.OnMovieClickListener
-import com.steven.todopeliculas.data.model.FavoriteMovie
+import com.steven.todopeliculas.data.local.entities.FavoriteMovieEntity
 import com.steven.todopeliculas.databinding.FragmentFavoriteMoviesBinding
 import com.steven.todopeliculas.presentation.MovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FavoriteMoviesFragment : Fragment(), OnMovieClickListener<FavoriteMovie> {
+class FavoriteMoviesFragment : Fragment(), OnMovieClickListener<FavoriteMovieEntity> {
     private var _binding: FragmentFavoriteMoviesBinding? = null
     private val binding get() = _binding!!
     private lateinit var concatAdapter: FavoriteMovieAdapter
@@ -43,7 +43,7 @@ class FavoriteMoviesFragment : Fragment(), OnMovieClickListener<FavoriteMovie> {
         })
     }
 
-    override fun onMovieClick(movie: FavoriteMovie) {
+    override fun onMovieClick(movie: FavoriteMovieEntity) {
         viewModel.deleteFavoriteMovie(movie)
     }
 }

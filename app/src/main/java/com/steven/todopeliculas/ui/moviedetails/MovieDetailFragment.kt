@@ -12,7 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.steven.todopeliculas.R
 import com.steven.todopeliculas.application.AppConstants
-import com.steven.todopeliculas.data.model.toFavoriteMovie
+import com.steven.todopeliculas.core.toFavoriteMovie
 import com.steven.todopeliculas.databinding.FragmentMovieDetailBinding
 import com.steven.todopeliculas.presentation.MovieViewModel
 import dagger.hilt.android.AndroidEntryPoint

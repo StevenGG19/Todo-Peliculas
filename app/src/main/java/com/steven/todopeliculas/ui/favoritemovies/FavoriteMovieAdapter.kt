@@ -8,11 +8,11 @@ import com.bumptech.glide.Glide
 import com.steven.todopeliculas.application.AppConstants
 import com.steven.todopeliculas.application.OnMovieClickListener
 import com.steven.todopeliculas.core.BaseViewHolder
-import com.steven.todopeliculas.data.model.FavoriteMovie
+import com.steven.todopeliculas.data.local.entities.FavoriteMovieEntity
 import com.steven.todopeliculas.databinding.FavoriteMovieItemBinding
 
-class FavoriteMovieAdapter(private val itemClickListener: OnMovieClickListener<FavoriteMovie>) : RecyclerView.Adapter<BaseViewHolder<*>>() {
-    private var listFavoriteMovies = ArrayList<FavoriteMovie>()
+class FavoriteMovieAdapter(private val itemClickListener: OnMovieClickListener<FavoriteMovieEntity>) : RecyclerView.Adapter<BaseViewHolder<*>>() {
+    private var listFavoriteMovies = ArrayList<FavoriteMovieEntity>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
         val itemBinding =
@@ -28,7 +28,7 @@ class FavoriteMovieAdapter(private val itemClickListener: OnMovieClickListener<F
 
     override fun getItemCount() = listFavoriteMovies.size
 
-    fun updateData(data: List<FavoriteMovie>) {
+    fun updateData(data: List<FavoriteMovieEntity>) {
         listFavoriteMovies.clear()
         listFavoriteMovies.addAll(data)
         notifyDataSetChanged()
@@ -37,8 +37,8 @@ class FavoriteMovieAdapter(private val itemClickListener: OnMovieClickListener<F
     private inner class MoviesViewHolder(
         val binding: FavoriteMovieItemBinding,
         val context: Context
-    ) : BaseViewHolder<FavoriteMovie>(binding.root) {
-        override fun bind(item: FavoriteMovie) {
+    ) : BaseViewHolder<FavoriteMovieEntity>(binding.root) {
+        override fun bind(item: FavoriteMovieEntity) {
             Glide.with(context).load(AppConstants.IMAGE_URL + item.poster_path)
                 .centerCrop().into(binding.imgFavoriteMovie)
             binding.txtTitleFavorite.text = item.title

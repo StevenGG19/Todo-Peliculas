@@ -17,6 +17,8 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.steven.todopeliculas.R
 import com.steven.todopeliculas.core.Resource
+import com.steven.todopeliculas.data.local.entities.UserEntity
+import com.steven.todopeliculas.data.model.User
 import com.steven.todopeliculas.databinding.FragmentProfileBinding
 import com.steven.todopeliculas.presentation.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,22 +38,62 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        userData()
+        readData()
         update()
         signOut()
         binding.btnChangePhoto.setOnClickListener {
             dispatchTakePictureIntent()
+        }
+        return binding.root
+    }
+
+    private fun readData() {
+        viewModel.userInfo.observe(viewLifecycleOwner) { user ->
+            if(user != null) {
+                showData(user.user)
+            }else {
+                userData()
+            }
+        }
+    }
+
+    private fun showData(user: User) {
+        Glide.with(requireContext()).load(user.photoUrl).into(binding.cimgPhoto)
+        userName = user.fullName
+        userNickname = user.username
+        userEmail = user.email
+        binding.tdUserName.setText(user.fullName)
+        binding.tdNickname.setText(user.username)
+        binding.tdEmail.setText(user.email)
+    }
+
+    private fun userData() {
+        viewModel.getDataUser().observe(viewLifecycleOwner) { user ->
+            when(user) {
+                is Resource.Loading -> {
+                    binding.btnChangePhoto.isEnabled = false
+                    binding.btnExit.isEnabled = false
+                    binding.btnUpdate.isEnabled = false
+                }
+                is Resource.Success -> {
+                    binding.btnChangePhoto.isEnabled = true
+                    binding.btnExit.isEnabled = true
+                    binding.btnUpdate.isEnabled = true
+                    user.data?.let {
+                        showData(it)
+                    }
+                }
+                is Resource.Failure -> {
+                    Toast.makeText(requireContext(), "Ha ocurrido un error", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 
     private fun signOut() {
         binding.btnExit.setOnClickListener {
             viewModel.signOut()
+            viewModel.deleteUser()
             findNavController().navigate(R.id.action_profieFragment_to_loginFragment)
         }
     }
@@ -82,16 +124,13 @@ class ProfileFragment : Fragment() {
             bitmap = null
         }
         if (userData.isNotEmpty()) {
-            viewModel.updateUser(userData).observe(viewLifecycleOwner, { result ->
+            viewModel.updateUser(userData).observe(viewLifecycleOwner) { result ->
                 when(result) {
-                    is Resource.Success -> {
-                        Toast.makeText(requireContext(), "Se han actualizado los datos", Toast.LENGTH_SHORT).show()
-                    }
-                    is Resource.Failure -> {
-                        Toast.makeText(requireContext(), "Ha ocurrido un error", Toast.LENGTH_SHORT).show()
-                    }
+                    is Resource.Loading -> Toast.makeText(requireContext(), "Actualizando...", Toast.LENGTH_SHORT).show()
+                    is Resource.Success -> Toast.makeText(requireContext(), "Se han actualizado los datos", Toast.LENGTH_SHORT).show()
+                    is Resource.Failure -> Toast.makeText(requireContext(), "Ha ocurrido un error", Toast.LENGTH_SHORT).show()
                 }
-            })
+            }
         }
     }
 
@@ -113,35 +152,6 @@ class ProfileFragment : Fragment() {
                 false
             }
         }
-    }
-
-    private fun userData() {
-        viewModel.getDataUser().observe(viewLifecycleOwner, { user ->
-            when(user) {
-                is Resource.Loading -> {
-                    binding.btnChangePhoto.isEnabled = false
-                    binding.btnExit.isEnabled = false
-                    binding.btnUpdate.isEnabled = false
-                }
-                is Resource.Success -> {
-                    binding.btnChangePhoto.isEnabled = true
-                    binding.btnExit.isEnabled = true
-                    binding.btnUpdate.isEnabled = true
-                    user.data?.let {
-                        Glide.with(requireContext()).load(it.photoUrl).into(binding.cimgPhoto)
-                        userName = it.fullName
-                        userNickname = it.username
-                        userEmail = it.email
-                        binding.tdUserName.setText(it.fullName)
-                        binding.tdNickname.setText(it.username)
-                        binding.tdEmail.setText(it.email)
-                    }
-                }
-                is Resource.Failure -> {
-                    Toast.makeText(requireContext(), "Ha ocurrido un error", Toast.LENGTH_SHORT).show()
-                }
-            }
-        })
     }
 
     private val result =

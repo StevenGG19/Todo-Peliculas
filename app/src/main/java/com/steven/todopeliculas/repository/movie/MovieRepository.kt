@@ -1,16 +1,16 @@
 package com.steven.todopeliculas.repository.movie
 
 import com.steven.todopeliculas.core.InternetCheck
-import com.steven.todopeliculas.data.local.LocalMovieDataSource
+import com.steven.todopeliculas.core.isNull
+import com.steven.todopeliculas.core.toMovieEntity
+import com.steven.todopeliculas.data.local.LocalDataSource
 import com.steven.todopeliculas.data.model.MovieList
-import com.steven.todopeliculas.data.model.isNull
-import com.steven.todopeliculas.data.model.toMovieEntity
 import com.steven.todopeliculas.data.remote.RemoteMovieDataSource
 import javax.inject.Inject
 
 class MovieRepository @Inject constructor(
     remote: RemoteMovieDataSource,
-    local: LocalMovieDataSource
+    local: LocalDataSource
 ) {
     private val dataSource = remote
     val dataSourceLocal = local

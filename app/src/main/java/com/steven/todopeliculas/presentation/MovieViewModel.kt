@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.steven.todopeliculas.core.Resource
-import com.steven.todopeliculas.data.model.FavoriteMovie
+import com.steven.todopeliculas.data.local.entities.FavoriteMovieEntity
 import com.steven.todopeliculas.repository.movie.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -37,15 +37,15 @@ class MovieViewModel @Inject constructor(private val repo: MovieRepository) : Vi
     }
 
     // MovieDetailFragment and FavoriteMoviesFragment
-    val favoriteMovieList: LiveData<List<FavoriteMovie>> = repo.dataSourceLocal.getFavoriteMovies()
+    val favoriteMovieList: LiveData<List<FavoriteMovieEntity>> = repo.dataSourceLocal.getFavoriteMovies()
 
-    fun saveFavoriteMovie(movie: FavoriteMovie) {
+    fun saveFavoriteMovie(movie: FavoriteMovieEntity) {
         viewModelScope.launch(Dispatchers.IO) {
             repo.dataSourceLocal.saveFavoriteMovie(movie)
         }
     }
 
-    fun deleteFavoriteMovie(movie: FavoriteMovie) {
+    fun deleteFavoriteMovie(movie: FavoriteMovieEntity) {
         viewModelScope.launch(Dispatchers.IO) {
             repo.dataSourceLocal.deleteFavoriteMovie(movie)
         }
