@@ -41,8 +41,7 @@ class MovieFragment : Fragment(), OnMovieClickListener<Movie> {
         super.onViewCreated(view, savedInstanceState)
         concatAdapter = ConcatAdapter()
 
-        viewModel.fetchMainScreenMovies().observe(viewLifecycleOwner, { result ->
-
+        viewModel.fetchMainScreenMovies().observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Resource.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE
@@ -82,7 +81,7 @@ class MovieFragment : Fragment(), OnMovieClickListener<Movie> {
                     Log.e("Error", "${result.exception}")
                 }
             }
-        })
+        }
     }
 
     override fun onMovieClick(movie: Movie) {

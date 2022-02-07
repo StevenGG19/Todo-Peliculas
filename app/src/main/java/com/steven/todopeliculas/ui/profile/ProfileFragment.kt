@@ -17,7 +17,6 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.steven.todopeliculas.R
 import com.steven.todopeliculas.core.Resource
-import com.steven.todopeliculas.data.local.entities.UserEntity
 import com.steven.todopeliculas.data.model.User
 import com.steven.todopeliculas.databinding.FragmentProfileBinding
 import com.steven.todopeliculas.presentation.ProfileViewModel

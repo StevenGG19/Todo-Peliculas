@@ -13,9 +13,6 @@
         <action
             android:id="@+id/action_movieFragment_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment" />
-        <action
-            android:id="@+id/action_movieFragment_to_favoriteMoviesFragment"
-            app:destination="@id/favoriteMoviesFragment" />
     </fragment>
     <dialog
         android:id="@+id/movieDetailFragment"

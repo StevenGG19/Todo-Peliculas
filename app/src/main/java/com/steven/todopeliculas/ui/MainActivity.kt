@@ -2,11 +2,12 @@ package com.steven.todopeliculas.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.Navigation
-import androidx.navigation.ui.NavigationUI
 import com.steven.todopeliculas.R
 import com.steven.todopeliculas.databinding.ActivityMainBinding
 import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.steven.todopeliculas.core.hide
 import com.steven.todopeliculas.core.show
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,6 +33,16 @@ class MainActivity : AppCompatActivity() {
                 R.id.registerFragment -> binding.btnNavigation.hide()
                 else -> binding.btnNavigation.show()
             }
+        }
+    }
+
+   override fun onBackPressed() {
+        val id = navController.currentDestination?.id
+        if (id != R.id.movieFragment) {
+            binding.btnNavigation.selectedItemId = R.id.movieFragment
+        } else {
+            super.onBackPressed()
+            finish()
         }
     }
 }
