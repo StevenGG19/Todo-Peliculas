@@ -29,7 +29,7 @@
         android:label="fragment_favorite_movies"
         tools:layout="@layout/fragment_favorite_movies" />
     <fragment
-        android:id="@+id/profieFragment"
+        android:id="@+id/profileFragment"
         android:name="com.steven.todopeliculas.ui.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
@@ -66,4 +66,9 @@
             android:id="@+id/action_registerFragment_to_movieFragment"
             app:destination="@id/movieFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/search"
+        android:name="com.steven.todopeliculas.ui.searchmovies.SearchMoviesFragment"
+        android:label="fragment_search_movies"
+        tools:layout="@layout/fragment_search_movies" />
 </navigation>

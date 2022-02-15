@@ -6,6 +6,7 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.steven.todopeliculas.core.Resource
 import com.steven.todopeliculas.data.local.entities.FavoriteMovieEntity
+import com.steven.todopeliculas.data.model.MovieList
 import com.steven.todopeliculas.repository.movie.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -48,6 +49,30 @@ class MovieViewModel @Inject constructor(private val repo: MovieRepository) : Vi
     fun deleteFavoriteMovie(movie: FavoriteMovieEntity) {
         viewModelScope.launch(Dispatchers.IO) {
             repo.dataSourceLocal.deleteFavoriteMovie(movie)
+        }
+    }
+
+    // SearchMovie
+    fun foundMovies(movie: String) = liveData(Dispatchers.IO) {
+        emit(Resource.Loading())
+        try {
+            emit(
+                Resource.Success(repo.searchMovies(movie))
+            )
+        } catch (e: Exception) {
+            emit(Resource.Failure(e))
+        }
+    }
+
+    // Trending movies
+    fun getTrending(time: String) = liveData(Dispatchers.IO) {
+        emit(Resource.Loading())
+        try {
+            emit(
+                Resource.Success(repo.getTrending(time))
+            )
+        } catch (e: Exception) {
+            emit(Resource.Failure(e))
         }
     }
 }

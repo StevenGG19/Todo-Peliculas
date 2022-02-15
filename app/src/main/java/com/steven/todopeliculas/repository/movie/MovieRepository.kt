@@ -47,4 +47,8 @@ class MovieRepository @Inject constructor(
             dataSourceLocal.getPopularMovies()
         }
     }
+
+    suspend fun searchMovies(movie: String): MovieList = dataSource.searchMovies(movie)
+
+    suspend fun getTrending(time: String): MovieList = dataSource.getTrending(time)
 }

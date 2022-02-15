@@ -5,4 +5,9 @@
     <string name="language">Language %s</string>
     <string name="reviews">%.1f (%d Reviews)</string>
     <string name="released">Released %s</string>
+    <string name="don_t_favorite_movies">You don\'t have favorite movies</string>
+    <string name="search">Search</string>
+    <string name="day">Today</string>
+    <string name="week">This week</string>
+    <string name="trending">Trending</string>
 </resources>

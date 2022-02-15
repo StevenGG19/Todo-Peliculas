@@ -24,4 +24,6 @@
         <item name="android:windowEnterAnimation">@anim/slide_up</item>
         <item name="android:windowExitAnimation">@anim/slide_out</item>
     </style>
+    
+    <style name="CustomChipStyle" parent="Widget.MaterialComponents.Chip.Choice"/>
 </resources>
